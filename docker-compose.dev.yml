@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  farmregister-db:
+    container_name: farmregister-db
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - farmregister-data:/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - farmregister-connect
+    ports:
+      - ${DB_PORT}:5432
+
+  app:
+    container_name: farmregister-server
+    command: yarn start
+    build: .
+    restart: on-failure
+    volumes:
+      - .:/home/node/api
+    depends_on:
+      - farmregister-db
+    networks:
+      - farmregister-connect
+    ports:
+      - ${PORT}:3333
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  farmregister-data:
+
+
+networks:
+  farmregister-connect:
+    driver: bridge
