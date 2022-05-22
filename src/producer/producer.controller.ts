@@ -10,12 +10,16 @@ import {
 import { ProducerService } from './producer.service';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ResponseProducerDto } from './dto/response-producer.dto';
 
+@ApiTags('Producer')
 @Controller('producer')
 export class ProducerController {
   constructor(private readonly producerService: ProducerService) {}
 
   @Post()
+  @ApiCreatedResponse({ type: ResponseProducerDto })
   create(@Body() createProducerDto: CreateProducerDto) {
     return this.producerService.create(createProducerDto);
   }
