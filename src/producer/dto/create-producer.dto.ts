@@ -1,1 +1,4 @@
-export class CreateProducerDto {}
+export class CreateProducerDto {
+  identitycode: string;
+  name: string;
+}
