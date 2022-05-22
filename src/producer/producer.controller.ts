@@ -10,8 +10,9 @@ import {
 import { ProducerService } from './producer.service';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseProducerDto } from './dto/response-producer.dto';
+import { ParamProducerDto } from './dto/param-producer.dto';
 
 @ApiTags('Producer')
 @Controller('producer')
@@ -25,25 +26,28 @@ export class ProducerController {
   }
 
   @Get()
+  @ApiOkResponse({ type: ResponseProducerDto, isArray: true })
   findAll() {
     return this.producerService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiOkResponse({ type: ResponseProducerDto })
+  findOne(@Param('id') id: ParamProducerDto) {
     return this.producerService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiCreatedResponse({ type: ResponseProducerDto })
   update(
-    @Param('id') id: string,
+    @Param('id') id: ParamProducerDto,
     @Body() updateProducerDto: UpdateProducerDto,
   ) {
     return this.producerService.update(+id, updateProducerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: ParamProducerDto) {
     return this.producerService.remove(+id);
   }
 }
