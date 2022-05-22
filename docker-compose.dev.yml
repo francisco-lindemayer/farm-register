@@ -18,7 +18,7 @@ services:
 
   app:
     container_name: farmregister-server
-    command: yarn start
+    command: yarn start:dev
     build: .
     restart: on-failure
     volumes:
