@@ -10,9 +10,13 @@ import {
 import { ProducerService } from './producer.service';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ResponseProducerDto } from './dto/response-producer.dto';
-import { ParamProducerDto } from './dto/param-producer.dto';
 
 @ApiTags('Producer')
 @Controller('producer')
@@ -33,21 +37,22 @@ export class ProducerController {
 
   @Get(':id')
   @ApiOkResponse({ type: ResponseProducerDto })
-  findOne(@Param('id') id: ParamProducerDto) {
+  findOne(@Param('id') id: string) {
     return this.producerService.findOne(+id);
   }
 
   @Patch(':id')
   @ApiCreatedResponse({ type: ResponseProducerDto })
   update(
-    @Param('id') id: ParamProducerDto,
+    @Param('id') id: string,
     @Body() updateProducerDto: UpdateProducerDto,
   ) {
     return this.producerService.update(+id, updateProducerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: ParamProducerDto) {
+  @ApiNoContentResponse()
+  remove(@Param('id') id: string) {
     return this.producerService.remove(+id);
   }
 }

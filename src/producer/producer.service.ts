@@ -21,14 +21,15 @@ export class ProducerService {
   }
 
   async findOne(id: number) {
-    return await this.producerRepository.findOne(id);
-  }
-
-  async update(id: number, updateProducerDto: UpdateProducerDto) {
-    const producer = await this.producerRepository.findOneOrFail(id);
+    const producer = await this.producerRepository.findOne(id);
 
     if (!producer) throw new NotFoundException('Produtor não localizado');
 
+    return producer;
+  }
+
+  async update(id: number, updateProducerDto: UpdateProducerDto) {
+    const producer = await this.findOne(id);
     producer.name = updateProducerDto.name;
 
     await this.producerRepository.update(id, producer);
@@ -37,6 +38,8 @@ export class ProducerService {
   }
 
   async remove(id: number) {
+    await this.findOne(id);
+
     return await this.producerRepository.delete(id);
   }
 }

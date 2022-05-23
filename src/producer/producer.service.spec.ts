@@ -1,5 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { ProducerFarm } from 'src/producer-farm/entities/producer-farm.entity';
+import { ProducerFarmService } from 'src/producer-farm/producer-farm.service';
 import { Repository } from 'typeorm';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { ResponseProducerDto } from './dto/response-producer.dto';
@@ -28,10 +30,12 @@ const producerSingleMock: Producer = {
 describe('ProducerService', () => {
   let service: ProducerService;
   let repository: Repository<Producer>;
+  let farmRepository: Repository<ProducerFarm>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        ProducerFarmService,
         ProducerService,
         {
           provide: getRepositoryToken(Producer),
@@ -71,11 +75,25 @@ describe('ProducerService', () => {
             delete: jest.fn(),
           },
         },
+        {
+          provide: getRepositoryToken(ProducerFarm),
+          useValue: {
+            save: jest.fn(),
+            update: jest.fn(),
+            find: jest.fn(),
+            findOne: jest.fn(),
+            remove: jest.fn(),
+            delete: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     service = module.get<ProducerService>(ProducerService);
     repository = module.get<Repository<Producer>>(getRepositoryToken(Producer));
+    farmRepository = module.get<Repository<ProducerFarm>>(
+      getRepositoryToken(ProducerFarm),
+    );
   });
 
   it('should be ProducerService defined', () => {

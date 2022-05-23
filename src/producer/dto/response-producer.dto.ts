@@ -9,7 +9,7 @@ export class ResponseProducerDto {
 
   @ApiProperty({
     description: 'CPF ou CNPJ',
-    example: '999.999.999-99 ou 44.444.444/0001-44',
+    example: '99999999999 ou 44444444000144',
   })
   identitycode: string;
 
