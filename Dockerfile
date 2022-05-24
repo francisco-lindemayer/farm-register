@@ -12,6 +12,4 @@ RUN yarn && yarn cache clean
 
 COPY --chown=node:node . .
 
-EXPOSE 3333
-
-CMD ["yarn", "start:dev"]
+RUN git clone https://github.com/vishnubob/wait-for-it.git
