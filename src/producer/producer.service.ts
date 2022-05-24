@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
+import { Producer } from './entities/producer.entity';
 
 @Injectable()
 export class ProducerService {
-  create(createProducerDto: CreateProducerDto) {
-    return 'This action adds a new producer';
+  constructor(
+    @InjectRepository(Producer)
+    private readonly producerRepository: Repository<Producer>,
+  ) {}
+
+  async create(createProducerDto: CreateProducerDto) {
+    return await this.producerRepository.save(createProducerDto);
   }
 
-  findAll() {
-    return `This action returns all producer`;
+  async findAll() {
+    return await this.producerRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} producer`;
+  async findOne(id: number) {
+    const producer = await this.producerRepository.findOne(id);
+
+    if (!producer) throw new NotFoundException('Produtor não localizado');
+
+    return producer;
   }
 
-  update(id: number, updateProducerDto: UpdateProducerDto) {
-    return `This action updates a #${id} producer`;
+  async update(id: number, updateProducerDto: UpdateProducerDto) {
+    const producer = await this.findOne(id);
+    producer.name = updateProducerDto.name;
+
+    await this.producerRepository.update(id, producer);
+
+    return producer;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} producer`;
+  async remove(id: number) {
+    await this.findOne(id);
+
+    return await this.producerRepository.delete(id);
   }
 }
