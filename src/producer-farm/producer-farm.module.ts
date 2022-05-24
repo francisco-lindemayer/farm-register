@@ -4,9 +4,10 @@ import { ProducerFarmController } from './producer-farm.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProducerFarm } from './entities/producer-farm.entity';
 import { Producer } from 'src/producer/entities/producer.entity';
+import { District } from 'src/district/entities/district.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProducerFarm, Producer])],
+  imports: [TypeOrmModule.forFeature([ProducerFarm, Producer, District])],
   controllers: [ProducerFarmController],
   providers: [ProducerFarmService],
 })

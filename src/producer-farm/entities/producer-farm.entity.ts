@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Producer } from 'src/producer/entities/producer.entity';
 import { Crop } from 'src/crop/entities/crop.entity';
+import { District } from 'src/district/entities/district.entity';
 
 @Entity()
 export class ProducerFarm {
@@ -25,6 +26,9 @@ export class ProducerFarm {
 
   @Column({ type: 'numeric' })
   farmedarea: number;
+
+  @ManyToOne(() => District, (district) => district.farms, { nullable: false })
+  district: District;
 
   @ManyToOne(() => Producer, (producer) => producer.farms)
   producer: Producer;

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { District } from 'src/district/entities/district.entity';
 import { Producer } from 'src/producer/entities/producer.entity';
 import { Repository } from 'typeorm';
 import { CreateProducerFarmDto } from './dto/create-producer-farm.dto';
@@ -13,6 +14,8 @@ export class ProducerFarmService {
     private readonly producerFarmRepository: Repository<ProducerFarm>,
     @InjectRepository(Producer)
     private readonly producerRepository: Repository<Producer>,
+    @InjectRepository(District)
+    private readonly districtRepository: Repository<District>,
   ) {}
 
   async create(
@@ -33,15 +36,16 @@ export class ProducerFarmService {
       where: {
         producer: { id: idproducer },
       },
+      relations: ['district', 'district.state'],
     });
   }
 
   async findOne(idproducer: number, id: number) {
     const farm = await this.producerFarmRepository.findOne(id, {
-      loadRelationIds: true,
+      relations: ['district', 'district.state', 'crops', 'producer'],
     });
 
-    if (+farm.producer !== +idproducer)
+    if (+farm.producer.id !== +idproducer)
       throw new NotFoundException('Fazenda não localizada');
 
     delete farm.producer;

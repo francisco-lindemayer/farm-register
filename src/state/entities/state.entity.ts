@@ -15,6 +15,6 @@ export class State {
   @Column()
   name: string;
 
-  @OneToMany(() => District, (district) => district.states)
+  @OneToMany(() => District, (district) => district.state)
   districts: District[];
 }
