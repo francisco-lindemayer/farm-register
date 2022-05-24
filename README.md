@@ -36,38 +36,125 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose -f docker-compose.dev.yml up --build
 ```
 
-## Test
+# Tasks
 
-```bash
-# unit tests
-$ npm run test
+- [x]  Mapeamento/modelagem de tabelas
+    
+    [https://dbdiagram.io/d/62883359f040f104c16b6304](https://dbdiagram.io/d/62883359f040f104c16b6304)
+    
+- [x]  Subir ambiente docker
+    - [x]  api
+    - [x]  postgres
+- [x]  Configuração para acesso a DB
+    - [x]  TypeORM
+    - [x]  Separar configuração TypeORM em módulo específico
+    - [x]  Utilizar objeto de configurações
+- [x]  Configuração Swagger
+    
+    [https://docs.nestjs.com/openapi/introduction](https://docs.nestjs.com/openapi/introduction)
+    
+    ```bash
+    npm install --save @nestjs/swagger swagger-ui-express
+    ```
+    
+    ```tsx
+    import { NestFactory } from '@nestjs/core';
+    import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+    import { AppModule } from './app.module';
+    
+    async function bootstrap() {
+      const app = await NestFactory.create(AppModule);
+    
+      const config = new DocumentBuilder()
+        .setTitle('Cats example')
+        .setDescription('The cats API description')
+        .setVersion('1.0')
+        .addTag('cats')
+        .build();
+      const document = SwaggerModule.createDocument(app, config);
+      SwaggerModule.setup('api', app, document);
+    
+      await app.listen(3000);
+    }
+    bootstrap();
+    ```
+    
+- [x]  Implementar CRUD
+    - [ ]  **Producer**
+        - [x]  DTO
+        - [x]  Entity
+        - [x]  Import TypeOrmModule.forFeature
+            
+            ```tsx
+            //example
+            @Module({
+              imports: [DatabaseModule, TypeOrmModule.forFeature([UserEntity])],
+              controllers: [AppController],
+              providers: [AppService],
+            })
+            ```
+            
+        - [x]  Swagger
+        - [x]  CRUD service
+        - [ ]  Validação
+            - [ ]  CPF/CNPJ
+        - [ ]  Testes Unitários Service
+        - [ ]  Testes Unitários Controller
+    - [ ]  **ProducerFarm**
+        - [x]  DTO
+        - [x]  Entity
+        - [x]  Import TypeOrmModule.forFeature
+        - [x]  Swagger
+        - [x]  CRUD service
+        - [ ]  Validações
+        - [ ]  Testes Unitários Service
+        - [ ]  Testes Unitários Controller
+    - [x]  **Configurar migrations**
+    - [x]  **Crop**
+        - [x]  DTO
+        - [x]  Entity
+        - [x]  Import TypeOrmModule.forFeature
+        - [x]  Controller
+            - [x]  Swagger
+            - [x]  Somente findAll
+        - [x]  CRUD service
+        - [x]  Seeds/Migrations data
+    - [x]  **State**
+        - [x]  DTO
+        - [x]  Entity
+        - [x]  Import TypeOrmModule.forFeature
+        - [x]  Controller
+            - [x]  Swagger
+            - [x]  Somente findAll
+            - [x]  FindOne (with districts)
+        - [x]  CRUD service
+        - [x]  Seeds/Migrations data
+    - [x]  **District (era para ser city). Me atrabalhei** 😵
+        - [x]  DTO
+        - [x]  Entity
+        - [x]  Import TypeOrmModule.forFeature
+        - [x]  Seeds/Migrations data
+    - [x]  **ProducerFarm**
+        - [x]  Refactoring add District
+        - [x]  Refactoring CRUD Crop
+    - [ ]  **Dashboard**
+        - [ ]  Somente get
+- [ ]  Exception Filters
+- [ ]  Validation Pipe
+- [ ]  Router Module
 
-# e2e tests
-$ npm run test:e2e
+### Abordagem alteranativa
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- [ ]  **ProducerFarmCrop? (se extra columns na tabela de ligação) one-many — many-one**
+    - [ ]  DTO
+    - [ ]  Entity
+    - [ ]  Import TypeOrmModule.forFeature
+    - [ ]  Controller
+        - [ ]  Swagger
+    - [ ]  CRUD service
+    - [ ]  Validações
+    - [ ]  Testes Unitários Service
+    - [ ]  Testes Unitários Controller
