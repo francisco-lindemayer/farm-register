@@ -8,8 +8,8 @@ const config: PostgresConnectionOptions = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   synchronize: true,
-  migrations: ['dist/src/database/migrations/*.js'],
-  entities: ['dist/src/**/*.entity.js'],
+  migrations: ['src/database/migrations/**/*.{ts,js}'],
+  entities: ['src/**/*.entity.{ts,js}'],
   cli: {
     migrationsDir: 'src/database/migrations',
   },

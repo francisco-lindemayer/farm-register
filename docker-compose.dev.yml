@@ -31,6 +31,22 @@ services:
       - ${PORT}:3333
     environment:
       - NODE_ENV=development
+  migration:
+    build:
+      context: .
+    command:
+      [
+        "./wait-for-it/wait-for-it.sh",
+        "farmregister-db:5432",
+        "--",
+        "npm",
+        "run",
+        "migration:run"
+      ]
+    depends_on:
+      - farmregister-db
+    networks:
+      - farmregister-connect
 
 volumes:
   farmregister-data:
