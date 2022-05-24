@@ -1,0 +1,16 @@
+import { Controller, Get } from '@nestjs/common';
+import { StateService } from './state.service';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ResponseStateDto } from './dto/response-state.dto';
+
+@ApiTags('state')
+@Controller('state')
+export class StateController {
+  constructor(private readonly stateService: StateService) {}
+
+  @Get()
+  @ApiOkResponse({ type: ResponseStateDto, isArray: true })
+  findAll() {
+    return this.stateService.findAll();
+  }
+}
