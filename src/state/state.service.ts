@@ -10,7 +10,14 @@ export class StateService {
     private readonly stateRepository: Repository<State>,
   ) {}
   async findAll() {
-    // TODO: Adicionar relation
-    return await this.stateRepository.find({ relations: [] });
+    return await this.stateRepository.find({ loadEagerRelations: false });
+  }
+
+  async findOne(ibgecode: string) {
+    console.log(ibgecode);
+    return await this.stateRepository.findOne({
+      where: { ibgecode: ibgecode },
+      relations: ['districts'],
+    });
   }
 }

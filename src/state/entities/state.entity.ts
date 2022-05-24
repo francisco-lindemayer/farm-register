@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { District } from 'src/district/entities/district.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class State {
@@ -13,4 +14,7 @@ export class State {
 
   @Column()
   name: string;
+
+  @OneToMany(() => District, (district) => district.states)
+  districts: District[];
 }

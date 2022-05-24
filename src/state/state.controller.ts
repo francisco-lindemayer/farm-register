@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { StateService } from './state.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseStateDto } from './dto/response-state.dto';
@@ -12,5 +12,14 @@ export class StateController {
   @ApiOkResponse({ type: ResponseStateDto, isArray: true })
   findAll() {
     return this.stateService.findAll();
+  }
+
+  @Get(':ibgecode/districts')
+  @ApiOkResponse()
+  findOne(
+    @Param('ibgecode')
+    ibgecode: string,
+  ) {
+    return this.stateService.findOne(ibgecode);
   }
 }

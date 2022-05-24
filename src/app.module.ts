@@ -4,6 +4,7 @@ import { ProducerModule } from './producer/producer.module';
 import { ProducerFarmModule } from './producer-farm/producer-farm.module';
 import { CropModule } from './crop/crop.module';
 import { StateModule } from './state/state.module';
+import { DistrictModule } from './district/district.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -11,6 +12,7 @@ import { StateModule } from './state/state.module';
     ProducerFarmModule,
     CropModule,
     StateModule,
+    DistrictModule,
   ],
   controllers: [],
   providers: [],
