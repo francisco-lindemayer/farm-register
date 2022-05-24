@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {} from 'class-validator';
 
-export class CreateCropDto {
+export class ResponseCropDto {
   @ApiProperty({
     description: 'Identificador do recurso',
     example: 1,

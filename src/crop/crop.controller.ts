@@ -1,34 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CropService } from './crop.service';
-import { CreateCropDto } from './dto/create-crop.dto';
-import { UpdateCropDto } from './dto/update-crop.dto';
+import { ResponseCropDto } from './dto/response-crop.dto';
 
+@ApiTags('Crop')
 @Controller('crop')
 export class CropController {
   constructor(private readonly cropService: CropService) {}
 
-  @Post()
-  create(@Body() createCropDto: CreateCropDto) {
-    return this.cropService.create(createCropDto);
-  }
-
   @Get()
+  @ApiOkResponse({ type: ResponseCropDto, isArray: true })
   findAll() {
     return this.cropService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cropService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCropDto: UpdateCropDto) {
-    return this.cropService.update(+id, updateCropDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cropService.remove(+id);
   }
 }
