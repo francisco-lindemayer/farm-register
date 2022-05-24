@@ -39,6 +39,30 @@ $ npm install
 docker-compose -f docker-compose.dev.yml up --build
 ```
 
+# Seeds básicas
+| ibgecode | uf  | name              |
+| -------- | --- | ----------------- |
+| 43       | RS  | Rio Grande do Sul |
+| 42       | SC  | Santa Catarina    |
+
+| ibgecode | name          | stateId |
+| -------- | ------------- | ------- |
+| 4300034  | Aceguá        | 82      |
+| 4300059  | Água Santa    | 82      |
+| 4300109  | Agudo         | 82      |
+| 4200101  | Abelardo Luz  | 83      |
+| 4200200  | Agrolândia    | 83      |
+| 4200051  | Abdon Batista | 83      |
+
+| name           | description                                                                                                                                                                                                                           | code  |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| Soja           | A soja, também conhecida como feijão-soja e feijão-chinês, é uma planta pertence à família Fabaceae                                                                                                                                   | A1222 |
+| Milho          | O milho, um conhecido cereal cultivado em grande parte do mundo, é extensivamente utilizado como alimento humano ou para ração animal devido às suas qualidades nutricionais                                                          | A1223 |
+| Algodão        | O algodão é uma fibra branca que cresce em volta das sementes de algumas espécies do gênero Gossypium, família Malvaceae                                                                                                              | A1224 |
+| Café           | O café é uma bebida produzida a partir dos grãos torrados do fruto do cafeeiro. É servido tradicionalmente quente, mas também pode ser consumido gelado.                                                                              | A1225 |
+| Cana de Açucar | Cana-de-açúcar é um grupo de espécies de gramíneas perenes altas do gênero Saccharum, tribo Andropogoneae, nativas das regiões tropicais do sul da Ásia e da Melanésia e utilizadas principalmente para a produção de açúcar e etanol | A1226 |
+
+
 # Tasks
 
 - [x]  Mapeamento/modelagem de tabelas
