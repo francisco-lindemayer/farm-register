@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Length } from 'class-validator';
 
 export class CreateProducerFarmDto {
   @ApiProperty({
@@ -24,4 +25,11 @@ export class CreateProducerFarmDto {
     example: '7',
   })
   farmedarea: number;
+
+  @Length(7)
+  @ApiProperty({
+    description: 'Código IBGE do município',
+    example: '4300034',
+  })
+  ibgecode: string;
 }

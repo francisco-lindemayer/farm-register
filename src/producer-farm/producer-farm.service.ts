@@ -22,12 +22,24 @@ export class ProducerFarmService {
     idproducer: number,
     createProducerFarmDto: CreateProducerFarmDto,
   ) {
+    const { ibgecode } = createProducerFarmDto;
+
     const producer = await this.producerRepository.findOne(idproducer);
+    const district = await this.districtRepository.findOne({
+      where: { ibgecode },
+      relations: ['state'],
+    });
+
+    if (!producer) throw new NotFoundException('Produtor não localizado');
+    if (!district) throw new NotFoundException('Município não localizado');
+
     const farm = await this.producerFarmRepository.create(
       createProducerFarmDto,
     );
 
     farm.producer = producer;
+    farm.district = district;
+
     return await this.producerFarmRepository.save(farm);
   }
 
