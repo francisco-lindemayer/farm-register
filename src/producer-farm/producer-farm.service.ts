@@ -57,7 +57,7 @@ export class ProducerFarmService {
       relations: ['district', 'district.state', 'crops', 'producer'],
     });
 
-    if (+farm.producer.id !== +idproducer)
+    if (!farm || +farm.producer.id !== +idproducer)
       throw new NotFoundException('Fazenda não localizada');
 
     delete farm.producer;
