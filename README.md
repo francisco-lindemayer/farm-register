@@ -170,7 +170,7 @@ docker-compose -f docker-compose.dev.yml up --build
 - [ ]  Validation Pipe
 - [ ]  Router Module
 
-### Abordagem alteranativa
+### Abordagem alternativa
 
 - [ ]  **ProducerFarmCrop? (se extra columns na tabela de ligação) one-many — many-one**
     - [ ]  DTO
